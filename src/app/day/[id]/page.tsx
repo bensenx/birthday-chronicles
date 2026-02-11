@@ -1,4 +1,4 @@
-import { getAllDays, getDayById } from '@/lib/api';
+import { getAllDays, getDayById } from '@/lib/api-full';
 import { EventFocusView } from '@/components/EventFocusView';
 import { notFound } from 'next/navigation';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { FloatingLights } from '@/components/FloatingLights';
-import { getAllDaysSummary } from '@/lib/api';
+import { getAllDaysSummary } from '@/lib/api-summary';
 import { VerticalMonthList } from '@/components/VerticalMonthList';
 import { MonthDrawer } from '@/components/MonthDrawer';
 import { PrefaceModal } from '@/components/PrefaceModal';
