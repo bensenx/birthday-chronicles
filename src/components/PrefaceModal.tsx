@@ -34,7 +34,8 @@ export function PrefaceModal({ isOpen, onClose, content }: PrefaceModalProps) {
                         <div className="bg-gradient-to-br from-slate-900 to-black border border-slate-800 w-full max-w-7xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl pointer-events-auto relative no-scrollbar overflow-hidden">
 
                             {/* Background Effect: Amber Blob (Matches EventFocusView) */}
-                            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-amber-500/10 blur-[120px] rounded-full animate-pulse pointer-events-none" />
+                            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none hidden md:block bg-amber-500/10 blur-[120px] animate-pulse" />
+                            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none md:hidden bg-[radial-gradient(circle,_rgba(245,158,11,0.1)_0%,_transparent_70%)]" />
 
                             {/* Close Button - Fixed to top right of container */}
                             <button

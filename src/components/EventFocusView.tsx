@@ -118,7 +118,9 @@ export function EventFocusView({ day }: EventFocusViewProps) {
             {/* Ambient Background - Dynamic based on index maybe? */}
             <div className="absolute inset-0 z-0">
                 <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900 to-black transition-colors duration-1000`} />
-                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-amber-500/10 blur-[120px] rounded-full animate-pulse" />
+                {/* Desktop: blur glow. Mobile: lightweight radial gradient */}
+                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full hidden md:block bg-amber-500/10 blur-[120px] animate-pulse" />
+                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full md:hidden bg-[radial-gradient(circle,_rgba(245,158,11,0.1)_0%,_transparent_70%)]" />
             </div>
 
             {/* Navigation / Close */}
