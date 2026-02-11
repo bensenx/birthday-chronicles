@@ -1,7 +1,5 @@
 {
   "name": "birthday-chronicles",
   "compatibility_date": "2026-02-11",
-  "assets": {
-    "directory": "./out"
-  }
+  "pages_build_output_dir": "./out"
 }
