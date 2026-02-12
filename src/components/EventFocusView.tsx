@@ -66,6 +66,32 @@ export function EventFocusView({ day }: EventFocusViewProps) {
         }
     };
 
+    // Touch swipe on entire page (mobile only)
+    const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+    useEffect(() => {
+        if (!isMobile) return;
+        const handleTouchStart = (e: TouchEvent) => {
+            touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        };
+        const handleTouchEnd = (e: TouchEvent) => {
+            if (!touchStartRef.current || !e.changedTouches[0]) return;
+            const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
+            const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
+            // Only trigger if vertical swipe is dominant and distance > 60px
+            if (Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)) {
+                if (dy < 0) paginate(1);   // swipe up → next
+                else paginate(-1);          // swipe down → previous
+            }
+            touchStartRef.current = null;
+        };
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchend', handleTouchEnd, { passive: true });
+        return () => {
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleTouchEnd);
+        };
+    }, [isMobile, currentIndex]);
+
     // Keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -120,7 +146,7 @@ export function EventFocusView({ day }: EventFocusViewProps) {
                 <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900 to-black transition-colors duration-1000`} />
                 {/* Desktop: blur glow. Mobile: lightweight radial gradient */}
                 <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full hidden md:block bg-amber-500/10 blur-[120px] animate-pulse" />
-                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full md:hidden bg-[radial-gradient(circle,_rgba(245,158,11,0.1)_0%,_transparent_70%)]" />
+                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full md:hidden bg-[radial-gradient(circle,_rgba(245,158,11,0.1)_0%,_transparent_70%)] mobile-ambient" />
             </div>
 
             {/* Navigation / Close */}

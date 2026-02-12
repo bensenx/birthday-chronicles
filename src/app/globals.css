@@ -155,3 +155,22 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Mobile-friendly ambient effects (opacity-only, GPU composited) */
+@keyframes ambient-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes star-twinkle-light {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.4; }
+}
+
+.mobile-ambient {
+  animation: ambient-glow 6s infinite ease-in-out;
+}
+
+.mobile-star-twinkle {
+  animation: star-twinkle-light 5s infinite ease-in-out;
+}
