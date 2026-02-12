@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { DayEntry } from '@/lib/api';
+import { DayEntry } from '@/lib/types';
 
 interface DateCardProps {
     day: DayEntry;

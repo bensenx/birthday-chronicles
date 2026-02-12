@@ -1,12 +1,5 @@
 import summaryData from '@/data/events-summary.json';
-
-export interface DaySummary {
-    id: string;
-    date: string;
-    title: string;
-    intro: string;
-    eventCount: number;
-}
+import { DaySummary } from './types';
 
 export const getAllDaysSummary = (): DaySummary[] => {
     return summaryData as DaySummary[];

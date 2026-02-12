@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { EventItem } from '@/lib/api';
+import { EventItem } from '@/lib/types';
 
 interface TimelineEventProps {
     event: EventItem;

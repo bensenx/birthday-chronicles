@@ -1,19 +1,5 @@
 import eventsData from '@/data/events.json';
-
-export interface EventItem {
-    emoji: string;
-    year: string;
-    title: string;
-    content: string;
-}
-
-export interface DayEntry {
-    id: string;
-    date: string;
-    title: string;
-    intro: string;
-    events: EventItem[];
-}
+import { EventItem, DayEntry } from './types';
 
 export const getAllDays = (): DayEntry[] => {
     return eventsData as DayEntry[];

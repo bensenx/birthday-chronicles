@@ -167,10 +167,12 @@ body {
   50% { opacity: 0.4; }
 }
 
-.mobile-ambient {
-  animation: ambient-glow 6s infinite ease-in-out;
-}
+@media (max-width: 767px) {
+  .mobile-ambient {
+    animation: ambient-glow 6s infinite ease-in-out;
+  }
 
-.mobile-star-twinkle {
-  animation: star-twinkle-light 5s infinite ease-in-out;
+  .mobile-star-twinkle {
+    animation: star-twinkle-light 5s infinite ease-in-out;
+  }
 }

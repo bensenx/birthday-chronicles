@@ -52,7 +52,7 @@ export default function Home() {
         <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full md:hidden bg-[radial-gradient(circle,_rgba(15,23,42,0.5)_0%,_transparent_70%)] mobile-ambient" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full hidden md:block bg-amber-950/10 blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] rounded-full md:hidden bg-[radial-gradient(circle,_rgba(69,26,3,0.1)_0%,_transparent_70%)] mobile-ambient" style={{ animationDelay: '3s' }} />
-        <div className="absolute inset-0 star-bg opacity-30 md:animate-twinkle mobile-star-twinkle md:[animation:none]" />
+        <div className="absolute inset-0 star-bg opacity-30 md:animate-twinkle mobile-star-twinkle" />
       </div>
 
       {/* Top Navigation */}

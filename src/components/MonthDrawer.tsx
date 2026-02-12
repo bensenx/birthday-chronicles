@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { DaySummary } from '@/lib/api';
+import { DaySummary } from '@/lib/types';
 import { CalendarGrid, CalendarPreviewCard } from './CalendarGrid';
 import { X } from 'lucide-react';
 import React, { useState } from 'react';

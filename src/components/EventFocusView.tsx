@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
-import { EventItem, DayEntry } from '@/lib/api';
+import { EventItem, DayEntry } from '@/lib/types';
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown, X } from 'lucide-react';
 import Link from 'next/link';
@@ -16,7 +16,11 @@ export function EventFocusView({ day }: EventFocusViewProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
+    const currentIndexRef = useRef(currentIndex);
     const [isMobile, setIsMobile] = useState(false);
+
+    // Keep ref in sync with state
+    useEffect(() => { currentIndexRef.current = currentIndex; }, [currentIndex]);
 
     // Detect mobile/touch device
     useEffect(() => {
@@ -79,8 +83,12 @@ export function EventFocusView({ day }: EventFocusViewProps) {
             const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
             // Only trigger if vertical swipe is dominant and distance > 60px
             if (Math.abs(dy) > 60 && Math.abs(dy) > Math.abs(dx)) {
-                if (dy < 0) paginate(1);   // swipe up → next
-                else paginate(-1);          // swipe down → previous
+                const dir = dy < 0 ? 1 : -1;
+                const nextIndex = currentIndexRef.current + dir;
+                if (nextIndex >= 0 && nextIndex < day.events.length) {
+                    setDirection(dir);
+                    setCurrentIndex(nextIndex);
+                }
             }
             touchStartRef.current = null;
         };
@@ -90,17 +98,25 @@ export function EventFocusView({ day }: EventFocusViewProps) {
             window.removeEventListener('touchstart', handleTouchStart);
             window.removeEventListener('touchend', handleTouchEnd);
         };
-    }, [isMobile, currentIndex]);
+    }, [isMobile]);
 
     // Keyboard navigation
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') paginate(1);
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') paginate(-1);
+            let dir = 0;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') dir = 1;
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') dir = -1;
+            if (dir !== 0) {
+                const nextIndex = currentIndexRef.current + dir;
+                if (nextIndex >= 0 && nextIndex < day.events.length) {
+                    setDirection(dir);
+                    setCurrentIndex(nextIndex);
+                }
+            }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [currentIndex]);
+    }, []);
 
     const variants = {
         enter: (direction: number) => (isMobile ? {
