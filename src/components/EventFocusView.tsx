@@ -3,10 +3,11 @@
 import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { EventItem, DayEntry } from '@/lib/types';
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUp, ArrowDown, X, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { SharePoster } from './SharePoster';
 
 interface EventFocusViewProps {
     day: DayEntry;
@@ -18,6 +19,7 @@ export function EventFocusView({ day }: EventFocusViewProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     const currentIndexRef = useRef(currentIndex);
     const [isMobile, setIsMobile] = useState(false);
+    const [isShareOpen, setIsShareOpen] = useState(false);
 
     // Keep ref in sync with state
     useEffect(() => { currentIndexRef.current = currentIndex; }, [currentIndex]);
@@ -167,9 +169,18 @@ export function EventFocusView({ day }: EventFocusViewProps) {
 
             {/* Navigation / Close */}
             <div className="absolute top-0 left-0 right-0 p-4 sm:p-6 md:p-8 z-50 flex justify-between items-start">
-                <Link href="/" className="glass-surface p-3 rounded-full text-slate-400 hover:text-white transition-colors">
-                    <X size={24} />
-                </Link>
+                <div className="flex items-center gap-2">
+                    <Link href="/" className="glass-surface p-3 rounded-full text-slate-400 hover:text-white transition-colors">
+                        <X size={24} />
+                    </Link>
+                    <button
+                        onClick={() => setIsShareOpen(true)}
+                        className="glass-surface p-3 rounded-full text-slate-400 hover:text-amber-400 transition-colors"
+                        aria-label="分享海报"
+                    >
+                        <Share2 size={24} />
+                    </button>
+                </div>
 
                 {/* Calendar Anchor */}
                 <div className="flex flex-col items-end gap-2">
@@ -328,6 +339,15 @@ export function EventFocusView({ day }: EventFocusViewProps) {
             <div className="fixed bottom-20 left-0 right-0 z-40 flex justify-center md:hidden">
                 <span className="text-xs text-slate-500 font-mono">↑ 上下滑动切换 ↓</span>
             </div>
+
+            {/* Share Poster Modal */}
+            <SharePoster
+                isOpen={isShareOpen}
+                onClose={() => setIsShareOpen(false)}
+                event={currentEvent}
+                date={day.date}
+                dayId={day.id}
+            />
 
         </div>
     );
