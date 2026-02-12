@@ -39,10 +39,18 @@ export function SharePoster({ isOpen, onClose, event, date, dayId }: SharePoster
         setIsMobile(window.matchMedia('(max-width: 768px)').matches);
     }, []);
 
+    // Derive site URL from current page location (works on any host/basePath)
+    const getSiteUrl = () => {
+        if (typeof window === 'undefined') return '';
+        const { origin, pathname } = window.location;
+        const base = pathname.split('/day/')[0];
+        return `${origin}${base}`;
+    };
+
     // Generate QR code when modal opens
     useEffect(() => {
         if (!isOpen) return;
-        QRCode.toDataURL(`https://birthday-chronicles.pages.dev/day/${dayId}`, {
+        QRCode.toDataURL(`${getSiteUrl()}/day/${dayId}`, {
             width: 120,
             margin: 1,
             color: { dark: '#f59e0bff', light: '#00000000' },
@@ -214,7 +222,7 @@ export function SharePoster({ isOpen, onClose, event, date, dayId }: SharePoster
                                 {formattedDate}
                             </div>
                             <div style={{ fontSize: 13, color: '#64748b', fontFamily: '"Inter", monospace' }}>
-                                birthday-chronicles.pages.dev
+                                {typeof window !== 'undefined' ? window.location.host : ''}
                             </div>
                         </div>
                         {qrDataUrl && (
